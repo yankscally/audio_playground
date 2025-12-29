@@ -1,9 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://be75tqhqs4blq"]
+[gd_scene format=3 uid="uid://be75tqhqs4blq"]
 
+[ext_resource type="Script" uid="uid://dm3m266lo2x6v" path="res://multiple_listener_test_3d.gd" id="1_rb571"]
 [ext_resource type="Script" uid="uid://cchyxug36qmvk" path="res://distance_from_source.gd" id="2_dfybw"]
 [ext_resource type="AudioStream" uid="uid://cdu4s3g4ndkl6" path="res://jazz_loop.wav" id="2_j2q8x"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hprkh"]
+albedo_color = Color(1, 1, 0.078431375, 1)
+
 [sub_resource type="SphereMesh" id="SphereMesh_ytq1y"]
+material = SubResource("StandardMaterial3D_hprkh")
 
 [sub_resource type="BoxMesh" id="BoxMesh_j2q8x"]
 size = Vector3(0.3, 0.5, 1)
@@ -12,6 +17,33 @@ size = Vector3(0.3, 0.5, 1)
 top_radius = 0.1
 bottom_radius = 0.15
 height = 0.34
+
+[sub_resource type="Animation" id="Animation_dfybw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/HBoxContainer/SubViewportContainer/SubViewport/Camera1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-7.916242e-09, 0, 2.0205994)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/HBoxContainer/SubViewportContainer2/SubViewport/Camera2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.042238593, 0, -2.0862474)]
+}
 
 [sub_resource type="Animation" id="Animation_1i4ao"]
 resource_name = "move_listeners_3d"
@@ -42,110 +74,92 @@ tracks/1/keys = {
 "values": [Vector3(-0.042238593, 0, -2.0862474), Vector3(-0.042238593, 0, -10.086247), Vector3(-0.042238593, 0, -2.0862474)]
 }
 
-[sub_resource type="Animation" id="Animation_dfybw"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/HBoxContainer/SubViewportContainer/SubViewport/Camera1:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-7.916242e-09, 0, 2.0205994)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/HBoxContainer/SubViewportContainer2/SubViewport/Camera2:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-0.042238593, 0, -2.0862474)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rb571"]
 _data = {
 &"RESET": SubResource("Animation_dfybw"),
 &"move_listeners_3d": SubResource("Animation_1i4ao")
 }
 
-[node name="Node" type="Node3D"]
+[node name="Node" type="Node3D" unique_id=916596324]
+script = ExtResource("1_rb571")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_ytq1y")
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="MeshInstance3D"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=771906182]
 stream = ExtResource("2_j2q8x")
 autoplay = true
 max_distance = 4.0
 panning_strength = 2.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="meshleft" type="MeshInstance3D" parent="AudioStreamPlayer3D" unique_id=76981850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.19443989)
+mesh = SubResource("SphereMesh_ytq1y")
+skeleton = NodePath("../..")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="meshright" type="MeshInstance3D" parent="AudioStreamPlayer3D" unique_id=830721477]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.18721032)
+mesh = SubResource("SphereMesh_ytq1y")
+skeleton = NodePath("../..")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=322763772]
+visible = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=2084201220]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/HBoxContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/HBoxContainer" unique_id=868076368]
 layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/HBoxContainer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/HBoxContainer/SubViewportContainer" unique_id=496550406]
 handle_input_locally = false
 audio_listener_enable_3d = true
-size = Vector2i(569, 648)
-render_target_update_mode = 4
+size = Vector2i(2, 2)
+render_target_update_mode = 0
 
-[node name="Camera1" type="Camera3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer/SubViewport"]
+[node name="Camera1" type="Camera3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer/SubViewport" unique_id=868761811]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -7.916242e-09, 0, 2.0205994)
 current = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer/SubViewport/Camera1"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer/SubViewport/Camera1" unique_id=28492832]
 mesh = SubResource("BoxMesh_j2q8x")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer/SubViewport/Camera1"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer/SubViewport/Camera1" unique_id=318881514]
 transform = Transform3D(1, -1.3113419e-07, 1.3113419e-07, 1.3113419e-07, -4.371139e-08, -1, 1.3113419e-07, 1, -4.371137e-08, 1.1920929e-07, 0, -0.6722867)
 mesh = SubResource("CylinderMesh_112p8")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer" unique_id=1937641239]
 custom_minimum_size = Vector2(6, 0)
 layout_mode = 2
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="CanvasLayer/HBoxContainer"]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="CanvasLayer/HBoxContainer" unique_id=654297201]
 layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/HBoxContainer/SubViewportContainer2"]
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/HBoxContainer/SubViewportContainer2" unique_id=748412325]
 handle_input_locally = false
 audio_listener_enable_3d = true
-size = Vector2i(569, 648)
-render_target_update_mode = 4
+size = Vector2i(2, 2)
+render_target_update_mode = 0
 
-[node name="Camera2" type="Camera3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer2/SubViewport"]
+[node name="Camera2" type="Camera3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer2/SubViewport" unique_id=1829703372]
 unique_name_in_owner = true
 transform = Transform3D(1.3113419e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113419e-07, -0.042238593, 0, -2.0862474)
 current = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer2/SubViewport/Camera2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer2/SubViewport/Camera2" unique_id=303177795]
 mesh = SubResource("BoxMesh_j2q8x")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer2/SubViewport/Camera2"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CanvasLayer/HBoxContainer/SubViewportContainer2/SubViewport/Camera2" unique_id=78849032]
 transform = Transform3D(1, -1.3113419e-07, 1.3113419e-07, 1.3113419e-07, -4.371139e-08, -1, 1.3113419e-07, 1, -4.371137e-08, 1.1920929e-07, 0, -0.6722867)
 mesh = SubResource("CylinderMesh_112p8")
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=432926817]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 23.0
@@ -154,8 +168,13 @@ size_flags_horizontal = 2
 size_flags_vertical = 6
 script = ExtResource("2_dfybw")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_rb571")
-}
-autoplay = "move_listeners_3d"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=486365634]
+libraries/ = SubResource("AnimationLibrary_rb571")
+autoplay = &"move_listeners_3d"
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1094948634]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -19.386211, 0, 0)
+fov = 28.8
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=887566673]
+transform = Transform3D(1, 0, 0, 0, 0.759646, 0.6503368, 0, -0.6503368, 0.759646, 0, 6.196419, 0)
