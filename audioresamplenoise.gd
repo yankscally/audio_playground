@@ -28,6 +28,12 @@ func _process(delta):
 	freqscale = maxvs
 	$VBox/Spectrum/Line2D.points = pts
 
+	if $VBox/ButtonSlowSweep.button_pressed:
+		var v = $VBox/HBox1/HSliderFreq.value + delta*500
+		if v > $VBox/HBox1/HSliderFreq.max_value:
+			v = $VBox/HBox1/HSliderFreq.min_value
+		$VBox/HBox1/HSliderFreq.set_value(v)
+
 func _on_h_slider_freq_value_changed(value):
 	$VBox/HBox1/LineEditFreq.text = "%d" % int(value)
 	sinehz = value

@@ -74,9 +74,13 @@ custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
 [node name="Line2D" type="Line2D" parent="VBox/Spectrum" unique_id=769750400]
-position = Vector2(0, 100)
 points = PackedVector2Array(0, 0, 100, 100, 200, -100, 300, 0)
 width = 3.0
+
+[node name="ButtonSlowSweep" type="Button" parent="VBox" unique_id=962976382]
+layout_mode = 2
+toggle_mode = true
+text = "Slow Sweep"
 
 [connection signal="value_changed" from="VBox/HBox1/HSliderFreq" to="." method="_on_h_slider_freq_value_changed"]
 [connection signal="value_changed" from="VBox/HBox2/HSliderPitch" to="." method="_on_h_slider_pitch_value_changed"]
