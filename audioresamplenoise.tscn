@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bqygo70fh1t2d"]
+
+[ext_resource type="Script" uid="uid://dgil08odgevdn" path="res://audioresamplenoise.gd" id="1_fo7ue"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_iicmp"]
+
+[node name="AudioResample" type="Control" unique_id=564442631]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fo7ue")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=247637788]
+stream = SubResource("AudioStreamGenerator_iicmp")
+autoplay = true
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=118880774]
+layout_mode = 0
+offset_right = 964.0
+offset_bottom = 101.0
+
+[node name="HBox1" type="HBoxContainer" parent="VBox" unique_id=1087226612]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/HBox1" unique_id=1121992515]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Frequency"
+
+[node name="HSliderFreq" type="HSlider" parent="VBox/HBox1" unique_id=388960618]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 20.0
+max_value = 3000.0
+value = 440.0
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="LineEditFreq" type="LineEdit" parent="VBox/HBox1" unique_id=1367477869]
+layout_mode = 2
+editable = false
+
+[node name="HBox2" type="HBoxContainer" parent="VBox" unique_id=58982562]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/HBox2" unique_id=1567886511]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Pitch scale"
+
+[node name="HSliderPitch" type="HSlider" parent="VBox/HBox2" unique_id=417584224]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.1
+max_value = 4.0
+step = 0.01
+value = 1.0
+tick_count = 10
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="LineEditPitch" type="LineEdit" parent="VBox/HBox2" unique_id=2140672610]
+layout_mode = 2
+editable = false
+
+[node name="Spectrum" type="Control" parent="VBox" unique_id=1924033229]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="VBox/Spectrum" unique_id=769750400]
+position = Vector2(0, 100)
+points = PackedVector2Array(0, 0, 100, 100, 200, -100, 300, 0)
+width = 3.0
+
+[connection signal="value_changed" from="VBox/HBox1/HSliderFreq" to="." method="_on_h_slider_freq_value_changed"]
+[connection signal="value_changed" from="VBox/HBox2/HSliderPitch" to="." method="_on_h_slider_pitch_value_changed"]
